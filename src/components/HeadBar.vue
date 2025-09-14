@@ -49,7 +49,7 @@ import { Edit, HomeFilled, Document, Collection, ChatDotRound, InfoFilled } from
 .head {
   height: 60px;
   width: 100%;
-  /* background-color: #f5f5f5; */
+  background-color: var(--el-bg-color);
   display: flex;
   align-items: center;
   justify-content: space-between;

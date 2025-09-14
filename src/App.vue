@@ -5,7 +5,7 @@ import Head from '@/components/HeadBar.vue'
 
 <template>
   <div class="dark">
-    <Head />
+    <Head style="position: fixed; top: 0; left: 0; right: 0; z-index: 10;"/>
     <RouterView />
   </div>
 </template>
