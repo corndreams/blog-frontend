@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome-banner" :style="bannerStyle">
+  <div class="welcome-banner">
     <div class="welcome-content">
       <h1 class="welcome-title">{{ welcomeData.title }}</h1>
       <p class="welcome-subtitle">{{ welcomeData.subtitle }}</p>
@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue';
+import { defineProps } from 'vue';
 
 interface WelcomeData {
   title: string;
@@ -19,16 +19,12 @@ interface WelcomeData {
 
 interface Props {
   welcomeData: WelcomeData;
-  backgroundImage?: string;
 }
 
 const props = defineProps<Props>();
 
-const bannerStyle = computed(() => {
-  return {
-    backgroundImage: props.backgroundImage ? `url(${props.backgroundImage})` : 'none'
-  };
-});
+console.log(props.welcomeData);
+
 </script>
 
 <style scoped lang="scss">
@@ -37,8 +33,6 @@ const bannerStyle = computed(() => {
   height: 500px;
   position: relative;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +46,7 @@ const bannerStyle = computed(() => {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 1;
   }
   

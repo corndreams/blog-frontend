@@ -18,26 +18,41 @@ export const homeData = {
       title: '文章1',
       icon: 'View',
       description: '文章1的描述',
+      tag: ['标签1', '标签2', '标签3'],
+      img: 'http://eopageapi.2x.nz/pic?img=ua',
+      time:'2025-09-13',
     },
     {
       title: '文章2',
       icon: 'View',
       description: '文章2的描述',
+      tag: ['标签1', '标签2', '标签3'],
+      img: 'http://eopageapi.2x.nz/pic?img=ua',
+      time:'2025-09-13',
     },
     {
       title: '文章3',
       icon: 'View',
       description: '文章3的描述',
+      tag: ['标签1', '标签2', '标签3'],
+      img: 'http://eopageapi.2x.nz/pic?img=ua',
+      time:'2025-09-13',
     },
     {
       title: '文章4',
       icon: 'View',
       description: '文章4的描述',
+      tag: ['标签1', '标签2', '标签3'],
+      img: 'http://eopageapi.2x.nz/pic?img=ua',
+      time:'2025-09-13',
     },
     {
       title: '文章5',
       icon: 'View',
       description: '文章5的描述',
+      tag: ['标签1', '标签2', '标签3'],
+      img: 'http://eopageapi.2x.nz/pic?img=ua',
+      time:'2025-09-13',
     },
   ],
   // 开发列表
@@ -63,15 +78,30 @@ export const homeData = {
         content: '项目创建',
       },
       {
-        time: '2025-09-13',
+        time: '2025-09-14',
         content: '初步完成导航栏和首页布局',
+      },
+      {
+        time: '2025-09-15',
+        content: '优化导航栏和首页布局',
       },
     ],
   },
   // 社交链接
   social: {
-    title: '社交链接',
-    description: '我的社交媒体账号',
+    title: '总览',
+    description: '总览信息',
+    // 用户个人信息
+    profile: {
+      avatar: 'https://blog.corndreams.ink/wp-content/uploads/2025/01/tou.png',
+      name: 'corndreams',
+      bio: '一名前端小白',
+      stats: {
+        articles: 13,
+        categories: 5,
+        tags: 8,
+      },
+    },
     links: [
       {
         name: 'Gitee',
