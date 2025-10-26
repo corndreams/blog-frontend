@@ -61,7 +61,7 @@
           v-for="(item, index) in homeData.articles"
           :key="index"
           :width="'100%'"
-          :height="'160px'"
+          :height="'240px'"
           :title="item.title"
           :description="item.description"
           :tag="item.tag"
@@ -98,8 +98,6 @@
       </div>
     </div>
 
-    <!-- 底部栏 -->
-    <Footer :footerData="homeData.footer" />
   </div>
 </template>
 
@@ -127,19 +125,19 @@ const getSocialIcon = (iconName: string) => {
 
 <style scoped lang="scss">
 body[data-theme='dark'] .home-container {
-  background-image: url('@/assets/img/dark.jpg');
+  // background-image: url('@/assets/img/dark.jpg');
 }
 
 .home-container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-  // margin-top: 60px;
-  min-height: calc(100vh); // 减去导航栏高度
-  background-image: url('@/assets/img/bg.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  // max-width: 100%;
+  // margin: 0 auto;
+  // padding: 0;
+  // // margin-top: 60px;
+  // min-height: calc(100vh); // 减去导航栏高度
+  // background-image: url('@/assets/img/bg.png');
+  // background-size: cover;
+  // background-position: center;
+  // background-attachment: fixed;
 
   .main-content {
     max-width: 1200px;

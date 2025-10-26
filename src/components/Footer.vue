@@ -79,7 +79,7 @@ const props = defineProps<Props>()
   background-color: #222;
   color: #fff;
   padding: 20px 0;
-  margin-top: 40px;
+  // margin-top: 40px;
 
   .banner-section {
     // overflow: hidden;

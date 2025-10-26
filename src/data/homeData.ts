@@ -20,7 +20,8 @@ export const homeData = {
       description: '文章1的描述',
       tag: ['标签1', '标签2', '标签3'],
       img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time:'2025-09-13',
+      time: '2025-09-13',
+      articleId: 1,
     },
     {
       title: '文章2',
@@ -28,7 +29,8 @@ export const homeData = {
       description: '文章2的描述',
       tag: ['标签1', '标签2', '标签3'],
       img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time:'2025-09-13',
+      time: '2025-09-13',
+      articleId: 2,
     },
     {
       title: '文章3',
@@ -36,7 +38,8 @@ export const homeData = {
       description: '文章3的描述',
       tag: ['标签1', '标签2', '标签3'],
       img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time:'2025-09-13',
+      time: '2025-09-13',
+      articleId: 3,
     },
     {
       title: '文章4',
@@ -44,7 +47,8 @@ export const homeData = {
       description: '文章4的描述',
       tag: ['标签1', '标签2', '标签3'],
       img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time:'2025-09-13',
+      time: '2025-09-13',
+      articleId: 4,
     },
     {
       title: '文章5',
@@ -52,7 +56,8 @@ export const homeData = {
       description: '文章5的描述',
       tag: ['标签1', '标签2', '标签3'],
       img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time:'2025-09-13',
+      time: '2025-09-13',
+      articleId: 5,
     },
   ],
   // 开发列表
@@ -85,6 +90,10 @@ export const homeData = {
         time: '2025-09-15',
         content: '优化导航栏和首页布局',
       },
+      {
+        time: '2025-09-16',
+        content: '优化卡片',
+      },
     ],
   },
   // 社交链接
@@ -93,7 +102,7 @@ export const homeData = {
     description: '总览信息',
     // 用户个人信息
     profile: {
-      avatar: 'https://blog.corndreams.ink/wp-content/uploads/2025/01/tou.png',
+      avatar: 'https://blog.corndreams.top/wp-content/uploads/2025/01/tou.png',
       name: 'corndreams',
       bio: '一名前端小白',
       stats: {
