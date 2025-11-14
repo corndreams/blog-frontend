@@ -22,18 +22,18 @@
           <el-icon><Document /></el-icon>
           <span>文章</span>
         </template>
-        <el-menu-item index="/article/latest">最新文章</el-menu-item>
+        <!-- <el-menu-item index="/article/latest">最新文章</el-menu-item>
         <el-menu-item index="/article/popular">热门文章</el-menu-item>
-        <el-menu-item index="/article/archive">文章归档</el-menu-item>
+        <el-menu-item index="/article/archive">文章归档</el-menu-item> -->
       </el-sub-menu>
       <el-sub-menu index="/category">
         <template #title>
           <el-icon><Collection /></el-icon>
           <span>分类</span>
         </template>
-        <el-menu-item index="/category/tech">技术</el-menu-item>
+        <!-- <el-menu-item index="/category/tech">技术</el-menu-item>
         <el-menu-item index="/category/life">生活</el-menu-item>
-        <el-menu-item index="/category/other">其他</el-menu-item>
+        <el-menu-item index="/category/other">其他</el-menu-item> -->
       </el-sub-menu>
       <el-menu-item index="/message">
         <el-icon><ChatDotRound /></el-icon>

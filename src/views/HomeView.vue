@@ -10,11 +10,11 @@
         <!-- 社交链接卡片 -->
         <CardBox :width="'100%'" :height="'auto'">
           <div class="profile-container">
-            <div 
-              class="avatar" 
+            <div
+              class="avatar"
               :style="{
-                backgroundImage: `url(${homeData.social.profile.avatar})`
-                }"
+                backgroundImage: `url(${homeData.social.profile.avatar})`,
+              }"
             ></div>
             <h3 class="profile-name">{{ homeData.social.profile.name }}</h3>
             <p class="profile-bio">{{ homeData.social.profile.bio }}</p>
@@ -57,18 +57,23 @@
       <!-- 中间区域 -->
       <div class="middle-section">
         <div class="middle-section-title">文章列表</div>
-        <CardBox
+        <router-link
           v-for="(item, index) in homeData.articles"
           :key="index"
-          :width="'100%'"
-          :height="'240px'"
-          :title="item.title"
-          :description="item.description"
-          :tag="item.tag"
-          :img="item.img"
-          :time="item.time"
+          :to="`/article/${item.articleId}`"
+          class="card-link"
         >
-        </CardBox>
+          <CardBox
+            :width="'100%'"
+            :height="'240px'"
+            :title="item.title"
+            :description="item.description"
+            :tag="item.tag"
+            :img="item.img"
+            :time="item.time"
+          >
+          </CardBox>
+        </router-link>
       </div>
 
       <!-- 右侧区域 -->
@@ -97,7 +102,6 @@
         </CardBox>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -150,13 +154,13 @@ body[data-theme='dark'] .home-container {
 
     .left-section {
       flex: 1;
-      
+
       .profile-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 20px 15px;
-        
+
         .avatar {
           width: 100px;
           height: 100px;
@@ -167,19 +171,19 @@ body[data-theme='dark'] .home-container {
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           margin-bottom: 15px;
           transition: transform 0.3s ease;
-          
+
           &:hover {
             transform: scale(1.05);
           }
         }
-        
+
         .profile-name {
           font-size: 1.5rem;
           font-weight: 600;
           margin: 10px 0 5px;
           color: var(--el-text-color-primary);
         }
-        
+
         .profile-bio {
           font-size: 0.9rem;
           color: var(--el-text-color-secondary);
@@ -187,7 +191,7 @@ body[data-theme='dark'] .home-container {
           margin-bottom: 15px;
           line-height: 1.4;
         }
-        
+
         .profile-stats {
           display: flex;
           width: 100%;
@@ -196,10 +200,10 @@ body[data-theme='dark'] .home-container {
           padding: 10px 0;
           border-top: 1px solid var(--el-border-color-lighter);
           border-bottom: 1px solid var(--el-border-color-lighter);
-          
+
           .stat-item {
             text-align: center;
-            
+
             a {
               display: flex;
               flex-direction: column;
@@ -207,17 +211,17 @@ body[data-theme='dark'] .home-container {
               padding: 5px 10px;
               border-radius: 6px;
               transition: background-color 0.2s;
-              
+
               &:hover {
                 background-color: var(--el-fill-color-light);
               }
-              
+
               .stat-number {
                 font-size: 1.2rem;
                 font-weight: 600;
                 color: var(--el-color-primary);
               }
-              
+
               .stat-label {
                 font-size: 0.8rem;
                 color: var(--el-text-color-secondary);
@@ -269,6 +273,10 @@ body[data-theme='dark'] .home-container {
         font-weight: bold;
         color: var(--el-text-color-primary);
         padding: 15px;
+      }
+      .card-link {
+        text-decoration: none;
+        display: block;
       }
     }
 
@@ -370,22 +378,22 @@ body[data-theme='dark'] .home-container {
             width: 80px;
             height: 80px;
           }
-          
+
           .profile-name {
             font-size: 1.3rem;
           }
-          
+
           .profile-bio {
             font-size: 0.85rem;
           }
-          
+
           .profile-stats {
             .stat-item {
               a {
                 .stat-number {
                   font-size: 1rem;
                 }
-                
+
                 .stat-label {
                   font-size: 0.75rem;
                 }

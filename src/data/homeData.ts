@@ -94,6 +94,18 @@ export const homeData = {
         time: '2025-09-16',
         content: '优化卡片',
       },
+      {
+        time: '2025-10-20',
+        content: '创建aboutme',
+      },
+      {
+        time: '2025-10-25',
+        content: '优化aboutme',
+      },
+      {
+        time: '2025-10-20',
+        content: '优化卡片',
+      },
     ],
   },
   // 社交链接
