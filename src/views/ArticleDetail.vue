@@ -15,32 +15,47 @@
       </div>
 
       <main class="article">
-        <CardBox :width="'100%'" :height="'auto'" :title="article?.title" :time="article?.time" :tag="article?.tags">
+        <CardBox
+          :width="'100%'"
+          :height="'auto'"
+          :title="article?.title"
+          :time="article?.time"
+          :tag="article?.tags"
+        >
         </CardBox>
-
-        <div class="article-content" v-if="article">
-          <section v-for="sec in sections" :key="sec.id" class="section">
-            <h2 :id="sec.id" class="section-title">{{ sec.title }}</h2>
-            <p v-for="(p, i) in sec.content" :key="i" class="paragraph">{{ p }}</p>
-          </section>
-        </div>
-
-        <div v-else class="not-found">未找到对应的文章</div>
+        <CardBox :width="'100%'" :height="'auto'">
+          <div class="article-content" v-if="article">
+            <section v-for="sec in sections" :key="sec.id" class="section">
+              <h2 :id="sec.id" class="section-title">{{ sec.title }}</h2>
+              <p v-for="(p, i) in sec.content" :key="i" class="paragraph">{{ p }}</p>
+            </section>
+          </div>
+          <div v-else class="not-found">未找到对应的文章</div>
+        </CardBox>
+        <CommentForm type="comment" :article-id="articleId" @submitted="refreshComments" />
+        <CommentList type="comment" :items="comments" />
       </main>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import CardBox from '@/components/CardBox.vue'
 import { getArticleById } from '@/data/articlesData'
+import CommentForm from '@/components/comments/CommentForm.vue'
+import CommentList from '@/components/comments/CommentList.vue'
+// 替换为拆分后的评论组件
 
 const route = useRoute()
 const articleId = Number(route.params.id)
 const article = computed(() => getArticleById(articleId))
 const sections = computed(() => article.value?.sections ?? [])
+const comments = ref([...(getArticleById(articleId)?.comments ?? [])])
+const refreshComments = () => {
+  comments.value = [...(getArticleById(articleId)?.comments ?? [])]
+}
 </script>
 
 <style scoped lang="scss">
@@ -113,9 +128,9 @@ const sections = computed(() => article.value?.sections ?? [])
     }
 
     .article-content {
-      background-color: rgba(#fafafa, 0.6);
-      border: 1px solid var(--el-border-color-light);
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+      // background-color: rgba(#fafafa, 0.6);
+      // border: 1px solid var(--el-border-color-light);
+      // box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
       border-radius: 8px;
       padding: 20px;
 

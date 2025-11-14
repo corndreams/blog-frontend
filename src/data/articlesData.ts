@@ -1,3 +1,11 @@
+export interface ArticleComment {
+  id: number
+  author: string
+  content: string
+  date: string
+  avatar?: string
+}
+
 export const articlesData = [
   {
     id: 1,
@@ -48,6 +56,22 @@ export const articlesData = [
         ],
       },
     ],
+    comments: <ArticleComment[]>[
+      {
+        id: 101,
+        author: '访客A',
+        content: '写得很清晰，受益匪浅。',
+        date: '2025-10-11',
+        avatar: 'https://picsum.photos/seed/a/40/40',
+      },
+      {
+        id: 102,
+        author: '访客B',
+        content: '目录和锚点的实现很实用。',
+        date: '2025-10-12',
+        avatar: 'https://picsum.photos/seed/b/40/40',
+      },
+    ],
   },
   {
     id: 2,
@@ -66,6 +90,22 @@ export const articlesData = [
         title: '交互可用性提升',
         level: 2,
         content: ['将卡片包裹在路由链接中，使用户可以直接点击进入文章详情页。'],
+      },
+    ],
+    comments: <ArticleComment[]>[
+      {
+        id: 201,
+        author: '访客C',
+        content: '卡片封装得很合理，易复用。',
+        date: '2025-10-06',
+        avatar: 'https://picsum.photos/seed/c/40/40',
+      },
+      {
+        id: 202,
+        author: '访客D',
+        content: '可以考虑支持更多交互状态。',
+        date: '2025-10-07',
+        avatar: 'https://picsum.photos/seed/d/40/40',
       },
     ],
   },
@@ -88,9 +128,34 @@ export const articlesData = [
         content: ['利用 data-theme 切换背景与组件颜色，在不同主题下保持良好可读性。'],
       },
     ],
+    comments: <ArticleComment[]>[
+      {
+        id: 301,
+        author: '访客E',
+        content: '暗黑模式适配得很好。',
+        date: '2025-10-11',
+        avatar: 'https://picsum.photos/seed/e/40/40',
+      },
+      {
+        id: 302,
+        author: '访客F',
+        content: '主题变量的用法值得学习。',
+        date: '2025-10-12',
+        avatar: 'https://picsum.photos/seed/f/40/40',
+      },
+    ],
   },
 ]
 
 export const getArticleById = (id: number) => {
   return articlesData.find((a) => a.id === id)
+}
+
+export const addComment = (id: number, comment: Omit<ArticleComment, 'id'>) => {
+  const a = articlesData.find((x) => x.id === id)
+  if (!a) return
+  const newId = Date.now()
+  const c: ArticleComment = { id: newId, ...comment }
+  a.comments = [c, ...(a.comments || [])]
+  return c
 }

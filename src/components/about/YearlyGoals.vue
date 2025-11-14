@@ -1,4 +1,5 @@
 <template>
+  <CardBox>
   <div class="yearly-goals">
     <div class="goals-header">
       <h3 class="goals-title">{{ goalsData.title }}</h3>
@@ -39,6 +40,7 @@
       </div>
     </div>
   </div>
+  </CardBox>
 </template>
 
 <script setup lang="ts">
@@ -83,11 +85,11 @@ const getPriorityText = (priority: string) => {
 
 <style scoped lang="scss">
 .yearly-goals {
-  background: rgba(#fafafa, 0.8);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--el-border-color-light);
+  // background: rgba(#fafafa, 0.8);
+  // border-radius: 12px;
+  // padding: 24px;
+  // box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  // border: 1px solid var(--el-border-color-light);
 
   .goals-header {
     display: flex;

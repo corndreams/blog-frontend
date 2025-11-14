@@ -9,6 +9,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CardBox: typeof import('./src/components/CardBox.vue')['default']
+    CommentForm: typeof import('./src/components/comments/CommentForm.vue')['default']
+    CommentList: typeof import('./src/components/comments/CommentList.vue')['default']
+    Comments: typeof import('./src/components/Comments.vue')['default']
+    DanmakuWall: typeof import('./src/components/DanmakuWall.vue')['default']
     Dark: typeof import('./src/components/dark.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -18,6 +22,7 @@ declare module 'vue' {
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']

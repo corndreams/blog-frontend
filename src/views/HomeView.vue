@@ -129,7 +129,7 @@ const getSocialIcon = (iconName: string) => {
 
 <style scoped lang="scss">
 body[data-theme='dark'] .home-container {
-  // background-image: url('@/assets/img/dark.jpg');
+  background-image: url('@/assets/img/dark.jpg');
 }
 
 .home-container {

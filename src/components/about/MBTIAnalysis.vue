@@ -1,4 +1,5 @@
 <template>
+  <CardBox>
   <div class="mbti-analysis">
     <div class="mbti-header">
       <div class="mbti-type">
@@ -12,7 +13,7 @@
 
     <p class="mbti-description">{{ mbtiData.description }}</p>
 
-    <div class="traits-container">
+    <!-- <div class="traits-container">
       <div class="traits-title">我的性格</div>
       <div class="traits-list">
         <div v-for="(trait, index) in mbtiData.traits" :key="index" class="trait-item">
@@ -34,8 +35,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
+  </CardBox>
 </template>
 
 <script setup lang="ts">
@@ -63,11 +65,11 @@ defineProps<Props>()
 
 <style scoped lang="scss">
 .mbti-analysis {
-  background: rgba(#fafafa, 0.8);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--el-border-color-light);
+  // background: rgba(#fafafa, 0.8);
+  // border-radius: 12px;
+  // padding: 24px;
+  // box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  // border: 1px solid var(--el-border-color-light);
 
   .mbti-header {
     display: flex;

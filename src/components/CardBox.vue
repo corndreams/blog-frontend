@@ -64,7 +64,7 @@ const cardStyle = computed(() => {
 .card-box {
   display: flex;
   justify-content: space-between;
-  background-color: rgba(#fafafa, 0.8);
+  background-color: rgba(#fafafa, 0.9);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid var(--el-border-color-light);
   box-sizing: border-box;

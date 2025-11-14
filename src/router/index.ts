@@ -18,6 +18,16 @@ const routes = [
         component: () => import('@/views/AboutMe.vue'),
       },
       {
+        path: '/archive',
+        name: '归档',
+        component: () => import('@/views/ArchiveView.vue'),
+      },
+      {
+        path: '/message',
+        name: '留言',
+        component: () => import('@/views/MessageView.vue'),
+      },
+      {
         path: '/article/:id',
         name: '文章详情',
         component: () => import('@/views/ArticleDetail.vue'),

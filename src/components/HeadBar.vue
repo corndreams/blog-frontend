@@ -17,24 +17,16 @@
         <el-icon><HomeFilled /></el-icon>
         <span>首页</span>
       </el-menu-item>
-      <el-sub-menu index="/article">
+      <!-- <el-sub-menu index="/article">
         <template #title>
           <el-icon><Document /></el-icon>
           <span>文章</span>
         </template>
-        <!-- <el-menu-item index="/article/latest">最新文章</el-menu-item>
-        <el-menu-item index="/article/popular">热门文章</el-menu-item>
-        <el-menu-item index="/article/archive">文章归档</el-menu-item> -->
-      </el-sub-menu>
-      <el-sub-menu index="/category">
-        <template #title>
-          <el-icon><Collection /></el-icon>
-          <span>分类</span>
-        </template>
-        <!-- <el-menu-item index="/category/tech">技术</el-menu-item>
-        <el-menu-item index="/category/life">生活</el-menu-item>
-        <el-menu-item index="/category/other">其他</el-menu-item> -->
-      </el-sub-menu>
+      </el-sub-menu> -->
+      <el-menu-item index="/archive">
+        <el-icon><Collection /></el-icon>
+        <span>归档</span>
+      </el-menu-item>
       <el-menu-item index="/message">
         <el-icon><ChatDotRound /></el-icon>
         <span>留言</span>
@@ -61,15 +53,10 @@
           <el-menu-item index="/article/popular">热门文章</el-menu-item>
           <el-menu-item index="/article/archive">文章归档</el-menu-item>
         </el-sub-menu>
-        <el-sub-menu index="/category">
-          <template #title>
-            <el-icon><Collection /></el-icon>
-            <span>分类</span>
-          </template>
-          <el-menu-item index="/category/tech">技术</el-menu-item>
-          <el-menu-item index="/category/life">生活</el-menu-item>
-          <el-menu-item index="/category/other">其他</el-menu-item>
-        </el-sub-menu>
+        <el-menu-item index="/archive">
+          <el-icon><Collection /></el-icon>
+          <span>归档</span>
+        </el-menu-item>
         <el-menu-item index="/message">
           <el-icon><ChatDotRound /></el-icon>
           <span>留言</span>
