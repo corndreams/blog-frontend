@@ -89,7 +89,7 @@ import {
 // 控制导航栏显示隐藏
 const isHidden = ref(false)
 const lastScrollTop = ref(0)
-const welcomeBannerHeight = ref(500) // WelcomeBanner的高度
+// const welcomeBannerHeight = ref(500) // WelcomeBanner的高度
 
 // 移动端菜单控制
 const mobileMenuOpen = ref(false)
@@ -109,7 +109,7 @@ const handleScroll = () => {
   const currentScrollTop = window.scrollY
 
   // 判断是否超过WelcomeBanner高度
-  if (currentScrollTop > welcomeBannerHeight.value) {
+  if (currentScrollTop > 100) {
     // 判断滚动方向
     if (currentScrollTop > lastScrollTop.value) {
       // 向下滚动，隐藏导航栏

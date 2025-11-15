@@ -3,7 +3,7 @@
     <div class="welcome-content">
       <h1 class="welcome-title">{{ welcomeData.title }}</h1>
       <p class="welcome-subtitle">{{ welcomeData.subtitle }}</p>
-      <p class="welcome-author">{{ welcomeData.author }}</p>
+      <!-- <p class="welcome-author">{{ welcomeData.author }}</p> -->
     </div>
   </div>
 </template>

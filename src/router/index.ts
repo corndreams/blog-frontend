@@ -18,6 +18,11 @@ const routes = [
         component: () => import('@/views/AboutMe.vue'),
       },
       {
+        path: '/login',
+        name: '登录',
+        component: () => import('@/views/LoginView.vue'),
+      },
+      {
         path: '/archive',
         name: '归档',
         component: () => import('@/views/ArchiveView.vue'),

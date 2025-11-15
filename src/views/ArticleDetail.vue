@@ -6,8 +6,8 @@
           <CardBox :height="'auto'" class="toc-card">
             <div class="toc-title">目录</div>
             <nav class="toc-list">
-              <a v-for="sec in sections" :key="sec.id" class="toc-item" :href="`#${sec.id}`">
-                {{ sec.title }}
+              <a v-for="item in toc" :key="item.id" class="toc-item" :href="`#${item.id}`">
+                {{ item.title }}
               </a>
             </nav>
           </CardBox>
@@ -19,17 +19,12 @@
           :width="'100%'"
           :height="'auto'"
           :title="article?.title"
-          :time="article?.time"
-          :tag="article?.tags"
+          :time="article?.created_at"
+          :tag="article?.tags ? article.tags.map(t => t.name) : []"
         >
         </CardBox>
         <CardBox :width="'100%'" :height="'auto'">
-          <div class="article-content" v-if="article">
-            <section v-for="sec in sections" :key="sec.id" class="section">
-              <h2 :id="sec.id" class="section-title">{{ sec.title }}</h2>
-              <p v-for="(p, i) in sec.content" :key="i" class="paragraph">{{ p }}</p>
-            </section>
-          </div>
+          <div class="article-content" v-if="article" ref="contentRef" v-html="article.content"></div>
           <div v-else class="not-found">未找到对应的文章</div>
         </CardBox>
         <CommentForm type="comment" :article-id="articleId" @submitted="refreshComments" />
@@ -40,22 +35,52 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import CardBox from '@/components/CardBox.vue'
-import { getArticleById } from '@/data/articlesData'
 import CommentForm from '@/components/comments/CommentForm.vue'
 import CommentList from '@/components/comments/CommentList.vue'
-// 替换为拆分后的评论组件
+import { getArticleDetail, type ArticleDetailResp } from '@/api/articles'
 
 const route = useRoute()
-const articleId = Number(route.params.id)
-const article = computed(() => getArticleById(articleId))
-const sections = computed(() => article.value?.sections ?? [])
-const comments = ref([...(getArticleById(articleId)?.comments ?? [])])
-const refreshComments = () => {
-  comments.value = [...(getArticleById(articleId)?.comments ?? [])]
+const articleId = ref(Number(route.params.id))
+const article = ref<ArticleDetailResp['data'] | null>(null)
+const contentRef = ref<HTMLElement | null>(null)
+const toc = ref<{ id: string; title: string; level: number }[]>([])
+
+const loadDetail = async () => {
+  const resp = await getArticleDetail(articleId.value)
+  article.value = resp.data.data
+  await nextTick()
+  buildToc()
 }
+
+const buildToc = () => {
+  toc.value = []
+  const el = contentRef.value
+  if (!el) return
+  const nodes = el.querySelectorAll('h1, h2, h3')
+  let idx = 0
+  nodes.forEach((node) => {
+    const level = Number(node.tagName.replace('H', ''))
+    idx += 1
+    const text = (node.textContent || '').trim() || `标题${idx}`
+    const id = node.id || `h${level}-${idx}`
+    node.id = id
+    toc.value.push({ id, title: text, level })
+  })
+}
+
+onMounted(loadDetail)
+watch(
+  () => route.params.id,
+  (val) => {
+    articleId.value = Number(val)
+    loadDetail()
+  }
+)
+
+const refreshComments = () => {}
 </script>
 
 <style scoped lang="scss">

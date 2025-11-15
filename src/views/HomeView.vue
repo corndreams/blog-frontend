@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <!-- 欢迎横幅区域 -->
-    <WelcomeBanner :welcomeData="homeData.welcome" style="margin-top: 60px" />
+    <WelcomeBanner :welcomeData="welcomeDataComputed" style="margin-top: 60px" />
 
     <!-- 主要内容区域 -->
     <div class="main-content">
@@ -13,11 +13,11 @@
             <div
               class="avatar"
               :style="{
-                backgroundImage: `url(${homeData.social.profile.avatar})`,
+                backgroundImage: `url(${userStore.info?.avatar || homeData.social.profile.avatar})`,
               }"
             ></div>
-            <h3 class="profile-name">{{ homeData.social.profile.name }}</h3>
-            <p class="profile-bio">{{ homeData.social.profile.bio }}</p>
+            <h3 class="profile-name">{{ userStore.info?.name || homeData.social.profile.name }}</h3>
+            <p class="profile-bio">{{ userStore.info?.tagline || homeData.social.profile.bio }}</p>
             <nav class="profile-stats">
               <div class="stat-item">
                 <a>
@@ -58,19 +58,19 @@
       <div class="middle-section">
         <div class="middle-section-title">文章列表</div>
         <router-link
-          v-for="(item, index) in homeData.articles"
-          :key="index"
-          :to="`/article/${item.articleId}`"
+          v-for="art in articlesStore.list"
+          :key="art.id"
+          :to="`/article/${art.id}`"
           class="card-link"
         >
           <CardBox
             :width="'100%'"
             :height="'240px'"
-            :title="item.title"
-            :description="item.description"
-            :tag="item.tag"
-            :img="item.img"
-            :time="item.time"
+            :title="art.title"
+            :description="art.description"
+            :img="art.cover"
+            :time="art.created_at"
+            :tag="art.category_name ? [art.category_name] : []"
           >
           </CardBox>
         </router-link>
@@ -110,6 +110,9 @@
 // import WelcomeBanner from '@/components/WelcomeBanner.vue'
 // import Footer from '@/components/Footer.vue'
 import { homeData } from '@/data/homeData'
+import { onMounted, computed } from 'vue'
+import { useArticlesStore } from '@/stores/articles'
+import { useUserStore } from '@/stores/user'
 import { Document } from '@element-plus/icons-vue'
 // import { onMounted, ref, onUnmounted } from 'vue'
 
@@ -121,15 +124,26 @@ const socialIconMap: Record<string, string> = {
   'wechat-icon': 'Link',
 }
 
-// 获取社交媒体图标
 const getSocialIcon = (iconName: string) => {
   return socialIconMap[iconName] || 'Link'
 }
+
+const articlesStore = useArticlesStore()
+const userStore = useUserStore()
+const welcomeDataComputed = computed(() => ({
+  title: homeData.welcome.title,
+  subtitle: userStore.info?.quote || homeData.welcome.subtitle,
+  author: homeData.welcome.author,
+}))
+onMounted(() => {
+  articlesStore.fetchPublished()
+  userStore.fetchInfo()
+})
 </script>
 
 <style scoped lang="scss">
 body[data-theme='dark'] .home-container {
-  background-image: url('@/assets/img/dark.jpg');
+  // background-image: url('@/assets/img/dark.jpg');
 }
 
 .home-container {

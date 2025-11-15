@@ -2,14 +2,14 @@
   <div class="about-container">
     <!-- 个人介绍区域 -->
     <CardBox :width="'100%'" :height="'auto'">
-      <ProfileIntro :profileData="aboutData.profile" />
+      <ProfileIntro :profileData="profileComputed" />
     </CardBox>
 
     <!-- 主要内容区域 -->
     <div class="main-content">
       <!-- MBTI人格分析 -->
       <div class="content-section">
-        <MBTIAnalysis :mbtiData="aboutData.mbti" />
+        <MBTIAnalysis :mbtiData="mbtiComputed" />
       </div>
 
       <!-- 年度目标 -->
@@ -25,6 +25,28 @@ import { aboutData } from '@/data/aboutData'
 import ProfileIntro from '@/components/about/ProfileIntro.vue'
 import MBTIAnalysis from '@/components/about/MBTIAnalysis.vue'
 import YearlyGoals from '@/components/about/YearlyGoals.vue'
+import { useUserStore } from '@/stores/user'
+import { computed, onMounted } from 'vue'
+
+const userStore = useUserStore()
+const profileComputed = computed(() => ({
+  avatar: userStore.info?.avatar || aboutData.profile.avatar,
+  name: userStore.info?.name || aboutData.profile.name,
+  title: userStore.info?.tagline || aboutData.profile.title,
+  description: userStore.info?.about || aboutData.profile.description,
+}))
+
+const mbtiComputed = computed(() => ({
+  type: userStore.info?.mbti || aboutData.mbti.type,
+  title: `我的MBTI`,
+  description: userStore.info?.mbti_intro || aboutData.mbti.description,
+  traits: aboutData.mbti.traits,
+  img: aboutData.mbti.img,
+}))
+
+onMounted(() => {
+  if (!userStore.info) userStore.fetchInfo()
+})
 </script>
 
 <style scoped lang="scss">

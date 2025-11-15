@@ -1,19 +1,19 @@
 <template>
   <CardBox>
-  <div class="mbti-analysis">
-    <div class="mbti-header">
-      <div class="mbti-type">
-        <span class="mbti-badge">{{ mbtiData.type }}</span>
-        <h3 class="mbti-title">{{ mbtiData.title }}</h3>
+    <div class="mbti-analysis">
+      <div class="mbti-header">
+        <div class="mbti-type">
+          <h3 class="mbti-title">{{ mbtiData.title }}</h3>
+          <span class="mbti-badge">{{ mbtiData.type }}</span>
+        </div>
+        <div class="mbti-avatar">
+          <img :src="mbtiData.img" alt="" />
+        </div>
       </div>
-      <div class="mbti-avatar">
-        <img :src="mbtiData.img" alt="" />
-      </div>
-    </div>
 
-    <p class="mbti-description">{{ mbtiData.description }}</p>
+      <p class="mbti-description">{{ mbtiData.description }}</p>
 
-    <!-- <div class="traits-container">
+      <!-- <div class="traits-container">
       <div class="traits-title">我的性格</div>
       <div class="traits-list">
         <div v-for="(trait, index) in mbtiData.traits" :key="index" class="trait-item">
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div> -->
-  </div>
+    </div>
   </CardBox>
 </template>
 
