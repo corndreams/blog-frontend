@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { trackVisit } from '@/api/visits'
 import HomeView from '../views/HomeView.vue'
 
 const routes = [
@@ -21,6 +22,21 @@ const routes = [
         path: '/login',
         name: '登录',
         component: () => import('@/views/LoginView.vue'),
+      },
+      {
+        path: '/articles',
+        name: '文章列表',
+        component: () => import('@/views/ArticlesView.vue'),
+      },
+      {
+        path: '/notes',
+        name: '随记',
+        component: () => import('@/views/NotesView.vue'),
+      },
+      {
+        path: '/notes/:id',
+        name: '随记详情',
+        component: () => import('@/views/NotesView.vue'),
       },
       {
         path: '/archive',
@@ -49,6 +65,10 @@ const router = createRouter({
     if (to.hash) return { el: to.hash, behavior: 'smooth' }
     return { top: 0 }
   },
+})
+
+router.afterEach((to) => {
+  trackVisit(to.path)
 })
 
 export default router

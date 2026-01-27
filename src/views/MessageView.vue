@@ -19,19 +19,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import DanmakuWall from '@/components/DanmakuWall.vue'
 import CommentForm from '@/components/comments/CommentForm.vue'
 // import CommentList from '@/components/comments/CommentList.vue'
-import { messageData } from '@/data/messageData'
+import { getAllMessages } from '@/api/messages'
 
-const wallItems = ref([...messageData.wall])
-const messages = ref([...messageData.messages])
+const wallItems = ref<{ author: string; content: string }[]>([])
+const messages = ref<any[]>([])
+
+const loadMessages = async () => {
+  const resp = await getAllMessages()
+  const arr = resp.data.data || []
+  wallItems.value = arr.map((m) => ({ author: m.name, content: m.content }))
+  messages.value = arr.map((m, i) => ({ id: i + 1, author: m.name, content: m.content, avatar: `https://picsum.photos/seed/${encodeURIComponent(m.name)}/40/40` }))
+}
 
 const refresh = () => {
-  messages.value = [...messageData.messages]
-  wallItems.value = [...messageData.wall]
+  loadMessages()
 }
+
+onMounted(loadMessages)
 </script>
 
 <style scoped lang="scss">

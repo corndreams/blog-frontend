@@ -18,6 +18,7 @@ import { homeData } from '@/data/homeData'
 
 <style scoped>
 .main-container {
+  min-height: calc(100vh - 60px);
   width: 100%;
   padding: 0;
   margin-top: 60px;

@@ -28,7 +28,7 @@
           <div v-else class="not-found">未找到对应的文章</div>
         </CardBox>
         <CommentForm type="comment" :article-id="articleId" @submitted="refreshComments" />
-        <CommentList type="comment" :items="comments" />
+        <CommentList type="comment" :items="comments" :article-id="articleId" @submitted="refreshComments" />
       </main>
     </div>
   </div>
@@ -41,18 +41,25 @@ import CardBox from '@/components/CardBox.vue'
 import CommentForm from '@/components/comments/CommentForm.vue'
 import CommentList from '@/components/comments/CommentList.vue'
 import { getArticleDetail, type ArticleDetailResp } from '@/api/articles'
+import { getCommentsTree } from '@/api/comments'
 
 const route = useRoute()
 const articleId = ref(Number(route.params.id))
 const article = ref<ArticleDetailResp['data'] | null>(null)
 const contentRef = ref<HTMLElement | null>(null)
 const toc = ref<{ id: string; title: string; level: number }[]>([])
+const comments = ref<any[]>([])
 
 const loadDetail = async () => {
   const resp = await getArticleDetail(articleId.value)
   article.value = resp.data.data
   await nextTick()
   buildToc()
+}
+
+const loadComments = async () => {
+  const resp = await getCommentsTree(articleId.value)
+  comments.value = resp.data.data || []
 }
 
 const buildToc = () => {
@@ -71,16 +78,22 @@ const buildToc = () => {
   })
 }
 
-onMounted(loadDetail)
+onMounted(async () => {
+  await loadDetail()
+  await loadComments()
+})
 watch(
   () => route.params.id,
   (val) => {
     articleId.value = Number(val)
-    loadDetail()
+    loadDetail();
+    loadComments();
   }
 )
 
-const refreshComments = () => {}
+const refreshComments = () => {
+  loadComments()
+}
 </script>
 
 <style scoped lang="scss">
@@ -192,6 +205,9 @@ const refreshComments = () => {}
     }
     .toc {
       display: none;
+    }
+    .article-content{
+      padding: 5px;
     }
   }
 }

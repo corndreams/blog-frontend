@@ -6,12 +6,12 @@
           <h3 class="mbti-title">{{ mbtiData.title }}</h3>
           <span class="mbti-badge">{{ mbtiData.type }}</span>
         </div>
-        <div class="mbti-avatar">
+        <!-- <div class="mbti-avatar">
           <img :src="mbtiData.img" alt="" />
-        </div>
+        </div> -->
       </div>
 
-      <p class="mbti-description">{{ mbtiData.description }}</p>
+      <p class="mbti-description" v-html="mbtiData.description"></p>
 
       <!-- <div class="traits-container">
       <div class="traits-title">我的性格</div>
@@ -49,11 +49,11 @@ interface TraitData {
 }
 
 interface MBTIData {
-  type: string
+  type: string | undefined
   title: string
-  description: string
-  traits: TraitData[]
-  img: string
+  description: string | undefined
+  // traits: TraitData[]
+  // img: string
 }
 
 interface Props {
@@ -65,6 +65,7 @@ defineProps<Props>()
 
 <style scoped lang="scss">
 .mbti-analysis {
+  padding: 24px;
   // background: rgba(#fafafa, 0.8);
   // border-radius: 12px;
   // padding: 24px;
@@ -107,6 +108,7 @@ defineProps<Props>()
   .mbti-description {
     color: var(--el-text-color-regular);
     line-height: 1.6;
+    white-space: pre-line;
     margin-bottom: 24px;
     font-size: 0.95rem;
   }
@@ -218,5 +220,10 @@ body[data-theme='dark'] {
       }
     }
   }
+}
+@media (max-width: 768px) {
+.mbti-analysis{
+  padding: 0;
+}
 }
 </style>

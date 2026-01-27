@@ -13,35 +13,35 @@
       </div>
 
       <!-- 年度目标 -->
-      <div class="content-section">
+      <!-- <div class="content-section">
         <YearlyGoals :goalsData="aboutData.goals2025" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { aboutData } from '@/data/aboutData'
+// import { aboutData } from '@/data/aboutData'
 import ProfileIntro from '@/components/about/ProfileIntro.vue'
 import MBTIAnalysis from '@/components/about/MBTIAnalysis.vue'
-import YearlyGoals from '@/components/about/YearlyGoals.vue'
+// import YearlyGoals from '@/components/about/YearlyGoals.vue'
 import { useUserStore } from '@/stores/user'
 import { computed, onMounted } from 'vue'
 
 const userStore = useUserStore()
 const profileComputed = computed(() => ({
-  avatar: userStore.info?.avatar || aboutData.profile.avatar,
-  name: userStore.info?.name || aboutData.profile.name,
-  title: userStore.info?.tagline || aboutData.profile.title,
-  description: userStore.info?.about || aboutData.profile.description,
+  avatar: userStore.info?.avatar,
+  name: userStore.info?.name,
+  title: userStore.info?.tagline,
+  description: userStore.info?.about,
 }))
 
 const mbtiComputed = computed(() => ({
-  type: userStore.info?.mbti || aboutData.mbti.type,
+  type: userStore.info?.mbti,
   title: `我的MBTI`,
-  description: userStore.info?.mbti_intro || aboutData.mbti.description,
-  traits: aboutData.mbti.traits,
-  img: aboutData.mbti.img,
+  description: userStore.info?.mbti_intro,
+  // traits: aboutData.mbti.traits,
+  // img: aboutData.mbti.img,
 }))
 
 onMounted(() => {
@@ -61,8 +61,8 @@ onMounted(() => {
   }
 
   .main-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr;
     gap: 24px;
     align-items: start;
 

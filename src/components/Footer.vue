@@ -14,7 +14,7 @@
         {{ footerData.copyright }}
       </div>
       <div class="footer-info">
-        <div class="footer-icp">{{ footerData.icp }}</div>
+        <!-- <div class="footer-icp">{{ footerData.icp }}</div> -->
         <div class="footer-email">{{ footerData.email }}</div>
       </div>
     </div>
@@ -27,7 +27,7 @@ import { homeData } from '@/data/homeData'
 
 interface FooterData {
   copyright: string
-  icp: string
+  // icp: string
   email: string
 }
 
@@ -41,8 +41,8 @@ let timerInterval: number | null = null
 
 // 计算网站运行时间
 const calculateRunningTime = () => {
-  // 假设网站上线时间为2023年1月1日
-  const startDate = new Date('2025-09-13T19:00:00')
+  // 假设网站上线时间为2025年11月19日
+  const startDate = new Date('2025-11-19T19:00:00')
   const currentDate = new Date()
   const timeDiff = currentDate.getTime() - startDate.getTime()
 
@@ -72,6 +72,7 @@ onUnmounted(() => {
 })
 
 const props = defineProps<Props>()
+
 </script>
 
 <style scoped lang="scss">

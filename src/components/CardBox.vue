@@ -1,6 +1,6 @@
 <template>
   <div class="card-box" :style="cardStyle">
-    <div class="card-text" :style="{ padding: padding }">
+    <div class="card-text">
       <img v-if="img" :src="img" alt="" class="card-img-mobile" />
       <div class="card-header" v-if="title">
         <div class="card-title">{{ title }}</div>
@@ -12,8 +12,10 @@
       <div class="card-content">
         <div v-if="description">{{ description }}</div>
         <slot></slot>
-        <div class="card-tag-box" v-if="tag">
-          <span class="card-tag" v-for="item in tag" :key="item">{{ item }}</span>
+        <div class="meta-box" >
+          <span v-if="category" class="meta-chip">分类：{{ category }}</span>
+          <span v-for="t in tags" :key="t" class="card-tag" @click.stop="">{{ t }}</span>
+          <span v-if="visits !== undefined" class="visit-chip">访问：{{ visits }}</span>
         </div>
       </div>
     </div>
@@ -30,13 +32,16 @@ interface Props {
   title?: string
   width?: string | number
   height?: string | number
-  padding?: string | number
+  // padding?: string | number
   background?: string
   borderRadius?: string | number
   description?: string
   img?: string
   tag?: string[]
   time?: string
+  category?: string
+  tags?: string[]
+  visits?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -51,7 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
 const cardStyle = computed(() => {
   return {
     width: typeof props.width === 'number' ? `${props.width}px` : props.width,
-    // height: typeof props.height === 'number' ? `${props.height}px` : props.height,
+    height: typeof props.height === 'number' ? `${props.height}px` : props.height,
     // padding: typeof props.padding === 'number' ? `${props.padding}px` : props.padding,
     // background: props.background,
     borderRadius:
@@ -79,6 +84,7 @@ const cardStyle = computed(() => {
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 16px;
   }
 
   .card-img-mobile {
@@ -123,6 +129,28 @@ const cardStyle = computed(() => {
       }
     }
 
+    .meta-box {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      .meta-chip {
+        background-color: #8adcff;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: var(--el-text-color-primary);
+      }
+      .visit-chip {
+        background-color: #f0f9ff;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: var(--el-text-color-regular);
+      }
+    }
+
     .card-tag {
       display: inline;
       border-radius: 5px;
@@ -157,11 +185,25 @@ body[data-theme='dark'] {
   .card-box {
     background-color: rgba(#141414, 0.8);
     .card-content {
+      .meta-chip {
+        background-color: #273f49;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: var(--el-text-color-primary);
+      }
       .card-tag {
         background-color: #2f3835;
         &:hover {
           background-color: #3a4341;
         }
+      }
+      .visit-chip {
+        background-color: #343738;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: var(--el-text-color-regular);
       }
     }
   }
@@ -186,6 +228,7 @@ body[data-theme='dark'] {
       width: 100%;
       display: flex;
       flex-direction: column;
+      padding: 12px;
     }
 
     .card-img-mobile {

@@ -1,24 +1,26 @@
 <template>
   <div class="profile-intro">
-    <div class="profile-avatar">
-      <img :src="profileData.avatar" :alt="profileData.name" />
-    </div>
     <div class="profile-content">
-      <h1 class="profile-name">{{ profileData.name }}</h1>
-      <h2 class="profile-title">{{ profileData.title }}</h2>
-      <p class="profile-description">{{ profileData.description }}</p>
+      <div class="profile-avatar">
+        <img :src="profileData.avatar" :alt="profileData.name" />
+      </div>
+      <div class="profile-info">
+        <div class="profile-name">{{ profileData.name }}</div>
+        <div class="profile-title">{{ profileData.title }}</div>
+      </div>
     </div>
+    <p class="profile-description" v-html="profileData.description"></p>
   </div>
 </template>
 
 <script setup lang="ts">
 interface ProfileData {
-  avatar: string
-  name: string
-  title: string
-  description: string
-  location?: string
-  email?: string
+  avatar: string | undefined
+  name: string | undefined
+  title: string | undefined
+  description: string | undefined
+  location?: string | undefined
+  email?: string | undefined
 }
 
 interface Props {
@@ -30,20 +32,30 @@ defineProps<Props>()
 
 <style scoped lang="scss">
 .profile-intro {
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
   gap: 40px;
   padding: 40px;
   //background: linear-gradient(135deg, #98a2cf 0%, #b69ccf 100%);
   border-radius: 16px;
   // color: white;
-  margin-bottom: 24px;
+  // margin-bottom: 24px;
 
   @media (max-width: 768px) {
     flex-direction: column;
     text-align: center;
     gap: 24px;
-    padding: 24px;
+    padding: 0;
+  }
+
+  .profile-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .profile-info {
+    flex: 1;
+    margin-left: 24px;
   }
 
   .profile-avatar {
@@ -70,10 +82,6 @@ defineProps<Props>()
       font-size: 2.5rem;
       font-weight: 700;
       margin: 0 0 8px 0;
-      // background: linear-gradient(45deg, #fff, #e0e7ff);
-      // -webkit-background-clip: text;
-      // -webkit-text-fill-color: transparent;
-      // background-clip: text;
 
       @media (max-width: 768px) {
         font-size: 2rem;
@@ -84,18 +92,14 @@ defineProps<Props>()
       font-size: 1.25rem;
       font-weight: 400;
       margin: 0 0 16px 0;
-      opacity: 0.9;
-      // color: #e0e7ff;
-    }
-
-    .profile-description {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin: 0;
-      opacity: 0.85;
-      max-width: 600px;
     }
   }
-}
 
+  .profile-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    // opacity: 0.9;
+  }
+}
 </style>

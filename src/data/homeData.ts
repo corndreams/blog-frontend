@@ -10,103 +10,7 @@ export const homeData = {
   // 计时器数据
   timer: {
     title: '0天0小时0分钟0秒',
-    subtitle: '项目已创建时间',
-  },
-  // 文章列表
-  articles: [
-    {
-      title: '文章1',
-      icon: 'View',
-      description: '文章1的描述',
-      tag: ['标签1', '标签2', '标签3'],
-      img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time: '2025-09-13',
-      articleId: 1,
-    },
-    {
-      title: '文章2',
-      icon: 'View',
-      description: '文章2的描述',
-      tag: ['标签1', '标签2', '标签3'],
-      img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time: '2025-09-13',
-      articleId: 2,
-    },
-    {
-      title: '文章3',
-      icon: 'View',
-      description: '文章3的描述',
-      tag: ['标签1', '标签2', '标签3'],
-      img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time: '2025-09-13',
-      articleId: 3,
-    },
-    {
-      title: '文章4',
-      icon: 'View',
-      description: '文章4的描述',
-      tag: ['标签1', '标签2', '标签3'],
-      img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time: '2025-09-13',
-      articleId: 4,
-    },
-    {
-      title: '文章5',
-      icon: 'View',
-      description: '文章5的描述',
-      tag: ['标签1', '标签2', '标签3'],
-      img: 'http://eopageapi.2x.nz/pic?img=ua',
-      time: '2025-09-13',
-      articleId: 5,
-    },
-  ],
-  // 开发列表
-  devList: {
-    title: '开发任务列表',
-    description: '网站开发任务列表',
-    items: [
-      '完善导航栏功能',
-      '完成主页布局',
-      '创建各个页面',
-      '完善card组件',
-      '适配暗黑模式切换',
-      '适配移动端',
-    ],
-  },
-  // 通知区域
-  notification: {
-    title: '通知',
-    description: '通知信息',
-    items: [
-      {
-        time: '2025-09-13',
-        content: '项目创建',
-      },
-      {
-        time: '2025-09-14',
-        content: '初步完成导航栏和首页布局',
-      },
-      {
-        time: '2025-09-15',
-        content: '优化导航栏和首页布局',
-      },
-      {
-        time: '2025-09-16',
-        content: '优化卡片',
-      },
-      {
-        time: '2025-10-20',
-        content: '创建aboutme',
-      },
-      {
-        time: '2025-10-25',
-        content: '优化aboutme',
-      },
-      {
-        time: '2025-10-20',
-        content: '优化卡片',
-      },
-    ],
+    subtitle: '网站运行时间',
   },
   // 社交链接
   social: {
@@ -122,29 +26,12 @@ export const homeData = {
         categories: 5,
         tags: 8,
       },
-    },
-    links: [
-      {
-        name: 'Gitee',
-        icon: 'gitee-icon',
-        url: 'https://gitee.com/',
-      },
-      {
-        name: 'GitHub',
-        icon: 'github-icon',
-        url: 'https://github.com/',
-      },
-      {
-        name: 'BiliBili',
-        icon: 'bilibili-icon',
-        url: 'https://www.bilibili.com/',
-      },
-    ],
+    }
   },
   // 底部栏数据
   footer: {
     copyright: '© 2025 corndreams Blog',
-    icp: '网站备案号: 粤ICP备20251013号',
+    // icp: '网站备案号: 粤ICP备20251013号',
     email: '联系邮箱: 446875541@qq.com',
   },
 }

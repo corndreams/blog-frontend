@@ -1,8 +1,9 @@
 <template>
   <div class="head" :class="{ 'head-hidden': isHidden, 'head-visible': !isHidden }">
     <div class="head-left">
-      <el-icon class="logo-icon"><Edit /></el-icon>
-      <span class="name">我的博客</span>
+      <!-- <el-icon class="logo-icon"><Edit /></el-icon> -->
+      <img class="logo-icon" src="../assets/img/logo.png" alt="logo" style="height: 60px;" />
+      <span class="name">晚风漫记</span>
     </div>
 
     <!-- 移动端菜单按钮 -->
@@ -17,12 +18,10 @@
         <el-icon><HomeFilled /></el-icon>
         <span>首页</span>
       </el-menu-item>
-      <!-- <el-sub-menu index="/article">
-        <template #title>
-          <el-icon><Document /></el-icon>
-          <span>文章</span>
-        </template>
-      </el-sub-menu> -->
+      <el-menu-item index="/articles">
+        <el-icon><Document /></el-icon>
+        <span>文章</span>
+      </el-menu-item>
       <el-menu-item index="/archive">
         <el-icon><Collection /></el-icon>
         <span>归档</span>
@@ -30,6 +29,10 @@
       <el-menu-item index="/message">
         <el-icon><ChatDotRound /></el-icon>
         <span>留言</span>
+      </el-menu-item>
+      <el-menu-item index="/notes">
+        <el-icon><Edit /></el-icon>
+        <span>随记</span>
       </el-menu-item>
       <el-menu-item index="/about">
         <el-icon><InfoFilled /></el-icon>
@@ -44,15 +47,10 @@
           <el-icon><HomeFilled /></el-icon>
           <span>首页</span>
         </el-menu-item>
-        <el-sub-menu index="/article">
-          <template #title>
-            <el-icon><Document /></el-icon>
-            <span>文章</span>
-          </template>
-          <el-menu-item index="/article/latest">最新文章</el-menu-item>
-          <el-menu-item index="/article/popular">热门文章</el-menu-item>
-          <el-menu-item index="/article/archive">文章归档</el-menu-item>
-        </el-sub-menu>
+      <el-menu-item index="/articles">
+        <el-icon><Document /></el-icon>
+        <span>文章</span>
+      </el-menu-item>
         <el-menu-item index="/archive">
           <el-icon><Collection /></el-icon>
           <span>归档</span>
@@ -60,6 +58,10 @@
         <el-menu-item index="/message">
           <el-icon><ChatDotRound /></el-icon>
           <span>留言</span>
+        </el-menu-item>
+        <el-menu-item index="/notes">
+          <el-icon><Edit /></el-icon>
+          <span>随记</span>
         </el-menu-item>
         <el-menu-item index="/about">
           <el-icon><InfoFilled /></el-icon>

@@ -18,7 +18,7 @@
             ></div>
             <h3 class="profile-name">{{ userStore.info?.name || homeData.social.profile.name }}</h3>
             <p class="profile-bio">{{ userStore.info?.tagline || homeData.social.profile.bio }}</p>
-            <nav class="profile-stats">
+            <!-- <nav class="profile-stats">
               <div class="stat-item">
                 <a>
                   <span class="stat-number">{{ homeData.social.profile.stats.articles }}</span>
@@ -37,9 +37,29 @@
                   <span class="stat-label">标签</span>
                 </a>
               </div>
-            </nav>
+          </nav> -->
+          <div class="visit-stats">
+            <div class="stat-item">
+              <a>
+                <span class="stat-number">{{ visitStats.total }}</span>
+                <span class="stat-label">总访问</span>
+              </a>
+            </div>
+            <div class="stat-item">
+              <a>
+                <span class="stat-number">{{ visitStats.total_article }}</span>
+                <span class="stat-label">文章访问</span>
+              </a>
+            </div>
+            <div class="stat-item">
+              <a>
+                <span class="stat-number">{{ visitStats.total_diary }}</span>
+                <span class="stat-label">随记访问</span>
+              </a>
+            </div>
           </div>
-          <div class="social-links">
+          </div>
+          <!-- <div class="social-links">
             <a
               v-for="(link, index) in homeData.social.links"
               :key="index"
@@ -50,7 +70,7 @@
               <el-icon><component :is="getSocialIcon(link.icon)" /></el-icon>
               <span>{{ link.name }}</span>
             </a>
-          </div>
+          </div> -->
         </CardBox>
       </div>
 
@@ -70,66 +90,45 @@
             :description="art.description"
             :img="art.cover"
             :time="art.created_at"
-            :tag="art.category_name ? [art.category_name] : []"
+            :category="art.category_name || ''"
+            :tags="art.tags ? art.tags.split(',') : []"
+            :visits="art.views || 0"
           >
           </CardBox>
         </router-link>
       </div>
 
-      <!-- 右侧区域 -->
-      <div class="right-section">
-        <!-- 通知区域卡片 -->
-        <CardBox :width="'100%'" :height="'auto'" :title="homeData.notification.title">
-          <div class="notification-content">
-            <div
-              v-for="(notice, index) in homeData.notification.items"
-              :key="index"
-              class="notice-item"
-            >
-              <div class="notice-title">{{ notice.content }}</div>
-              <div class="notice-date">{{ notice.time }}</div>
-            </div>
-          </div>
-        </CardBox>
-        <!-- 开发列表卡片 -->
-        <CardBox :width="'100%'" :height="'auto'" :title="homeData.devList.title">
-          <div class="dev-list">
-            <div v-for="(item, index) in homeData.devList.items" :key="index" class="dev-item">
-              <el-icon><Document /></el-icon>
-              <span>{{ item }}</span>
-            </div>
-          </div>
-        </CardBox>
-      </div>
+      
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import CardBox from '@/components/CardBox.vue'
+import CardBox from '@/components/CardBox.vue'
 // import WelcomeBanner from '@/components/WelcomeBanner.vue'
 // import Footer from '@/components/Footer.vue'
 import { homeData } from '@/data/homeData'
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useArticlesStore } from '@/stores/articles'
 import { useUserStore } from '@/stores/user'
-import { Document } from '@element-plus/icons-vue'
+import { getVisitStats } from '@/api/visits'
 // import { onMounted, ref, onUnmounted } from 'vue'
 
 // 社交媒体图标映射
-const socialIconMap: Record<string, string> = {
-  'gitee-icon': 'Link',
-  'github-icon': 'Link',
-  'bilibili-icon': 'Link',
-  'wechat-icon': 'Link',
-}
+// const socialIconMap: Record<string, string> = {
+//   'gitee-icon': 'Link',
+//   'github-icon': 'Link',
+//   'bilibili-icon': 'Link',
+//   'wechat-icon': 'Link',
+// }
 
-const getSocialIcon = (iconName: string) => {
-  return socialIconMap[iconName] || 'Link'
-}
+// const getSocialIcon = (iconName: string) => {
+//   return socialIconMap[iconName] || 'Link'
+// }
 
 const articlesStore = useArticlesStore()
 const userStore = useUserStore()
+const visitStats = ref({ total: 0, total_article: 0, total_diary: 0 })
 const welcomeDataComputed = computed(() => ({
   title: homeData.welcome.title,
   subtitle: userStore.info?.quote || homeData.welcome.subtitle,
@@ -138,6 +137,9 @@ const welcomeDataComputed = computed(() => ({
 onMounted(() => {
   articlesStore.fetchPublished()
   userStore.fetchInfo()
+  getVisitStats().then((resp) => {
+    visitStats.value = resp.data.data || visitStats.value
+  })
 })
 </script>
 
@@ -157,11 +159,11 @@ body[data-theme='dark'] .home-container {
   // background-position: center;
   // background-attachment: fixed;
 
-  .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
   .main-content {
     display: flex;
     gap: 20px;
@@ -244,6 +246,14 @@ body[data-theme='dark'] .home-container {
             }
           }
         }
+        .visit-stats {
+          display: flex;
+          width: 100%;
+          justify-content: space-around;
+          margin: 10px 0 0;
+          padding: 10px 0;
+          border-bottom: 1px solid var(--el-border-color-lighter);
+        }
       }
 
       .social-links {
@@ -280,7 +290,7 @@ body[data-theme='dark'] .home-container {
     }
 
     .middle-section {
-      flex: 2;
+      flex: 3;
 
       .middle-section-title {
         font-size: 18px;
@@ -290,69 +300,12 @@ body[data-theme='dark'] .home-container {
       }
       .card-link {
         text-decoration: none;
+        // overflow: hidden;
         display: block;
       }
     }
 
-    .right-section {
-      flex: 1;
-
-      .notification-content {
-        padding: 5px;
-
-        .notice-item {
-          display: flex;
-          justify-content: space-between;
-          padding: 5px 0;
-          border-bottom: 1px solid var(--el-border-color-lighter);
-          transition: background-color 0.2s;
-
-          &:last-child {
-            border-bottom: none;
-          }
-
-          &:hover {
-            background-color: var(--el-fill-color-light);
-          }
-
-          .notice-title {
-            color: var(--el-text-color-primary);
-            font-weight: 500;
-          }
-
-          .notice-date {
-            color: var(--el-text-color-secondary);
-            font-size: 12px;
-          }
-        }
-      }
-
-      .dev-list {
-        padding: 15px;
-
-        .dev-item {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-bottom: 12px;
-          padding: 8px;
-          border-radius: 4px;
-          transition: background-color 0.2s;
-
-          &:hover {
-            background-color: var(--el-fill-color-light);
-          }
-
-          .el-icon {
-            color: var(--el-color-primary);
-          }
-
-          span {
-            color: var(--el-text-color-primary);
-          }
-        }
-      }
-    }
+    
   }
 }
 

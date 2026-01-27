@@ -8,7 +8,7 @@
         <div class="timeline">
           <div class="line"></div>
           <div class="groups">
-            <div class="group" v-for="(group, gi) in archive.timeArchive" :key="gi">
+            <div class="group" v-for="(group, gi) in timeGroups" :key="gi">
               <div class="group-head">
                 <span class="group-label">{{ group.label }}</span>
                 <span class="group-badge">月份</span>
@@ -16,7 +16,7 @@
               <ul class="group-list">
                 <li class="group-item" v-for="(item, ii) in group.items" :key="ii">
                   <span class="dot"></span>
-                  <span class="item-title">{{ item.title }}</span>
+                  <router-link :to="`/article/${item.id}`" class="item-title">{{ item.title }}</router-link>
                   <span class="item-date">{{ item.date }}</span>
                 </li>
               </ul>
@@ -28,42 +28,75 @@
 
       <!-- 右：分类归档 -->
       <section class="category-section">
+      <CardBox>
         <div class="category-header">
           <div class="category-title">分类归档</div>
-          <el-input v-model="query" placeholder="搜索" clearable class="category-search" />
+          <!-- <el-input v-model="query" placeholder="搜索分类" clearable class="category-search" /> -->
         </div>
-        <div class="category-list">
+        <div class="category-grid">
           <CardBox
             v-for="(c, idx) in filteredCategories"
             :key="idx"
             :width="'100%'"
             :height="'auto'"
           >
-            <div class="category-item">
-              <img v-if="c.cover" :src="c.cover" class="cover" alt="cover" />
-              <div class="meta">
-                <div class="name">{{ c.name }}</div>
-                <div class="sub">
-                  <span class="date">{{ c.date }}</span>
-                  <span class="count">{{ c.count }}</span>
-                </div>
-              </div>
+            <div class="category-card">
+              <div class="name">{{ c.name }}</div>
+              <div class="count">{{ c.count }}</div>
             </div>
           </CardBox>
         </div>
+        </CardBox>
+        <CardBox>
+        <div class="tags-section">
+          <div class="tags-title">标签归档</div>
+          <div class="tag-list">
+            <span class="tag" v-for="(t, i) in tags" :key="i">{{ t.name }}<em class="tag-count">{{ t.count }}</em></span>
+          </div>
+        </div>
+        </CardBox>
       </section>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref,computed, onMounted } from 'vue'
 import CardBox from '@/components/CardBox.vue'
-import { archiveData, getCategoriesByQuery } from '@/data/archiveData'
+import { getTimeArchive, getCategoryArchive, getTagArchive, type CategoryArchiveItem, type TagArchiveItem } from '@/api/archive'
 
-const archive = archiveData
 const query = ref('')
-const filteredCategories = computed(() => getCategoriesByQuery(query.value))
+const categories = ref<CategoryArchiveItem[]>([])
+const tags = ref<TagArchiveItem[]>([])
+const filteredCategories = computed(() => {
+  const q = query.value.trim().toLowerCase()
+  if (!q) return categories.value
+  return categories.value.filter((c) => c.name.toLowerCase().includes(q))
+})
+
+type TimeGroup = { label: string; items: { id: number; title: string; date: string }[] }
+const timeGroups = ref<TimeGroup[]>([])
+
+const loadTimeArchive = async () => {
+  const resp = await getTimeArchive()
+  const data = resp.data.data || {}
+  const groups: TimeGroup[] = []
+  Object.keys(data).forEach((year) => {
+    data[year].forEach((m) => {
+      const label = `${year}年 · ${m.month}月`
+      const items = (m.list || []).map((a) => ({ id: a.id, title: a.title, date: a.created_at || '' }))
+      groups.push({ label, items })
+    })
+  })
+  timeGroups.value = groups
+}
+
+onMounted(loadTimeArchive)
+onMounted(async () => {
+  const [cResp, tResp] = await Promise.all([getCategoryArchive(), getTagArchive()])
+  categories.value = cResp.data.data || []
+  tags.value = tResp.data.data || []
+})
 </script>
 
 <style scoped lang="scss">
@@ -82,6 +115,7 @@ const filteredCategories = computed(() => getCategoriesByQuery(query.value))
     // border: 1px solid var(--el-border-color-light);
     // border-radius: 8px;
     padding-right: 16px;
+    min-height: 700px;
 
     .time-title {
       font-weight: bold;
@@ -190,35 +224,48 @@ const filteredCategories = computed(() => getCategoriesByQuery(query.value))
       }
     }
 
-    .category-item {
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .category-card {
       display: flex;
       align-items: center;
-      gap: 12px;
-      .cover {
-        width: 100px;
-        height: 64px;
-        object-fit: cover;
-        border-radius: 6px;
-        box-shadow: 8px 10px 18px rgba(64, 158, 255, 0.25);
+      justify-content: space-between;
+      padding: 10px 12px;
+      .name {
+        font-weight: 600;
+        color: var(--el-text-color-primary);
       }
-      .meta {
-        flex: 1;
-        .name {
-          font-weight: 600;
-          color: var(--el-text-color-primary);
-        }
-        .sub {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          .date {
-            color: var(--el-text-color-secondary);
-            font-size: 12px;
-          }
-          .count {
-            color: var(--el-text-color-regular);
-            font-size: 12px;
-          }
+      .count {
+        color: var(--el-text-color-secondary);
+        font-size: 12px;
+      }
+    }
+
+    .tags-section {
+      margin-top: 16px;
+      .tags-title {
+        font-weight: bold;
+        font-size: 16px;
+        color: var(--el-text-color-primary);
+        margin-bottom: 8px;
+      }
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tag {
+        background-color: #e2fff4;
+        padding: 4px 8px;
+        border-radius: 16px;
+        font-size: 12px;
+        color: var(--el-text-color-primary);
+        .tag-count {
+          margin-left: 6px;
+          color: var(--el-text-color-secondary);
         }
       }
     }

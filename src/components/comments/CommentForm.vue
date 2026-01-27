@@ -11,14 +11,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import CardBox from '@/components/CardBox.vue'
-import { addComment } from '@/data/articlesData'
-import { addMessage } from '@/data/messageData'
+import { addComment as addCommentApi } from '@/api/comments'
+import { addMessage as addMessageApi } from '@/api/messages'
 
 type CommentType = 'comment' | 'message'
 
 interface Props {
   type: CommentType
   articleId?: number
+  parentId?: number | null
 }
 
 const props = defineProps<Props>()
@@ -30,19 +31,21 @@ const author = ref('')
 const content = ref('')
 const canSubmit = computed(() => author.value.trim() && content.value.trim())
 
-const submit = () => {
+const submit = async () => {
   if (!canSubmit.value) return
-  const date = new Date().toISOString().slice(0, 10)
+  // const date = new Date().toISOString().slice(0, 10)
   if (props.type === 'comment') {
-    if (!props.articleId && props.articleId !== 0) return
-    addComment(props.articleId!, {
-      author: author.value.trim(),
+    if (props.articleId == null) return
+    const avatar = `https://picsum.photos/seed/${encodeURIComponent(author.value.trim())}/40/40`
+    await addCommentApi({
+      article_id: props.articleId,
+      name: author.value.trim(),
       content: content.value.trim(),
-      date,
-      avatar: `https://picsum.photos/seed/${encodeURIComponent(author.value.trim())}/40/40`,
+      parent_id: props.parentId ?? null,
+      avatar,
     })
   } else {
-    addMessage(author.value.trim(), content.value.trim())
+    await addMessageApi({ name: author.value.trim(), content: content.value.trim() })
   }
   author.value = ''
   content.value = ''
