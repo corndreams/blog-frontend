@@ -38,39 +38,40 @@
                 </a>
               </div>
           </nav> -->
-          <div class="visit-stats">
-            <div class="stat-item">
-              <a>
-                <span class="stat-number">{{ visitStats.total }}</span>
-                <span class="stat-label">总访问</span>
-              </a>
-            </div>
-            <div class="stat-item">
-              <a>
-                <span class="stat-number">{{ visitStats.total_article }}</span>
-                <span class="stat-label">文章访问</span>
-              </a>
-            </div>
-            <div class="stat-item">
-              <a>
-                <span class="stat-number">{{ visitStats.total_diary }}</span>
-                <span class="stat-label">随记访问</span>
-              </a>
+            <div class="visit-stats">
+              <div class="stat-item">
+                <a>
+                  <span class="stat-number">{{ visitStats.total }}</span>
+                  <span class="stat-label">总访问</span>
+                </a>
+              </div>
+              <div class="stat-item">
+                <a>
+                  <span class="stat-number">{{ visitStats.total_article }}</span>
+                  <span class="stat-label">文章访问</span>
+                </a>
+              </div>
+              <div class="stat-item">
+                <a>
+                  <span class="stat-number">{{ visitStats.total_diary }}</span>
+                  <span class="stat-label">随记访问</span>
+                </a>
+              </div>
             </div>
           </div>
-          </div>
-          <!-- <div class="social-links">
+          <div class="social-links">
             <a
-              v-for="(link, index) in homeData.social.links"
-              :key="index"
+              v-for="link in socialLinks"
+              :key="link.id"
               :href="link.url"
               target="_blank"
+              rel="noopener noreferrer"
               class="social-link"
             >
-              <el-icon><component :is="getSocialIcon(link.icon)" /></el-icon>
+              <img class="social-icon" :src="link.icon" :alt="link.name" />
               <span>{{ link.name }}</span>
             </a>
-          </div> -->
+          </div>
         </CardBox>
       </div>
 
@@ -97,8 +98,6 @@
           </CardBox>
         </router-link>
       </div>
-
-      
     </div>
   </div>
 </template>
@@ -112,6 +111,7 @@ import { onMounted, computed, ref } from 'vue'
 import { useArticlesStore } from '@/stores/articles'
 import { useUserStore } from '@/stores/user'
 import { getVisitStats } from '@/api/visits'
+import { getSocialLinks, type SocialLinkItem } from '@/api/links'
 // import { onMounted, ref, onUnmounted } from 'vue'
 
 // 社交媒体图标映射
@@ -129,6 +129,7 @@ import { getVisitStats } from '@/api/visits'
 const articlesStore = useArticlesStore()
 const userStore = useUserStore()
 const visitStats = ref({ total: 0, total_article: 0, total_diary: 0 })
+const socialLinks = ref<SocialLinkItem[]>([])
 const welcomeDataComputed = computed(() => ({
   title: homeData.welcome.title,
   subtitle: userStore.info?.quote || homeData.welcome.subtitle,
@@ -139,6 +140,9 @@ onMounted(() => {
   userStore.fetchInfo()
   getVisitStats().then((resp) => {
     visitStats.value = resp.data.data || visitStats.value
+  })
+  getSocialLinks().then((resp) => {
+    socialLinks.value = resp.data.data || []
   })
 })
 </script>
@@ -159,11 +163,11 @@ body[data-theme='dark'] .home-container {
   // background-position: center;
   // background-attachment: fixed;
 
-    .main-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
   .main-content {
     display: flex;
     gap: 20px;
@@ -261,12 +265,13 @@ body[data-theme='dark'] .home-container {
         flex-wrap: wrap;
         justify-content: center;
         gap: 15px;
-        padding: 15px;
+        padding: 5px;
 
         .social-link {
           display: flex;
-          flex-direction: column;
-          align-items: center;
+          // flex-direction: column;
+          text-align: center;
+          // align-items: center;
           text-decoration: none;
           transition: transform 0.2s;
           padding: 10px;
@@ -275,15 +280,22 @@ body[data-theme='dark'] .home-container {
             transform: translateY(-3px);
           }
 
-          .el-icon {
-            font-size: 20px;
+          .social-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
             margin-bottom: 8px;
-            color: var(--el-color-primary);
+            object-fit: cover;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
           }
 
           span {
             color: var(--el-text-color-primary);
+            margin-left: 4px;
             font-size: 14px;
+            height: 24px;
+            line-height: 24px;
+            // text-align: center;
           }
         }
       }
@@ -304,8 +316,6 @@ body[data-theme='dark'] .home-container {
         display: block;
       }
     }
-
-    
   }
 }
 
