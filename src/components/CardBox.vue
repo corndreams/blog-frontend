@@ -234,7 +234,7 @@ body[data-theme='dark'] {
     .card-img-mobile {
       display: block;
       max-width: 100%;
-      max-height: 200px;
+      max-height: 100px;
       margin: auto;
       border-radius: 5px;
       margin-bottom: 10px;
